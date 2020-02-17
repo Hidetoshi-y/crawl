@@ -2,6 +2,10 @@
 
 # 参考にしたサイト
 (pythonでDarkSkyを利用)[https://qiita.com/snuow/items/29310b6d6229ce09caed]
+https://qiita.com/masuraoProg/items/41d57671bc1ba89489bb
+https://darksky.net/dev/docs
+https://darksky.net/dev/account
+https://knowledge.moshimore.jp/entry/dark_sky_api
 
 # How to Use
 通常の1日分取得
