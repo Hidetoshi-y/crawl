@@ -45,14 +45,15 @@ if __name__ == "__main__":
     import argparse  
     import json
     import urllib.request
-    import datetime
+    from datetime import datetime
+    from datetime import timedelta
     import time
     import configparser
 
     parser = argparse.ArgumentParser()
 
     #受け取る引数の追加
-    parser.add_argument('--api', type=str, default='aaxx')
+    parser.add_argument('--api', type=str, default='xxxxxxxx')
     parser.add_argument('--long', type=str, default='37.8267')
     parser.add_argument('--lati', type=str, default='-122.4233')
     parser.add_argument('--uni', type=str, default='si')
@@ -63,12 +64,30 @@ if __name__ == "__main__":
     LONGITUDE = args.long
     LATITUDE = args.lati
     UNITS = args.uni
+
+    start = datetime.strptime('2018-10-01', '%Y-%m-%d').date()
+    end   = datetime.strptime('2019-05-31', '%Y-%m-%d').date()
+
+    def daterange(_start, _end):
+        for n in range((_end - _start).days):
+            yield _start + timedelta(n)
+
+
+    for times in daterange(start, end):
+        times = str(times)
+        time = times+'T00:00:00'
+        json_data = get_forecast_timemachine(apikey=args.api, long=args.long, lati=args.lati, uni=args.uni, time=time)
+        with open('./output/json/forecast-timemachine-'+times+'.json', 'w') as fp:
+            json.dump(json_data, fp, indent=4)
+
+
+
     #EXCLUDE = currently,minutely,daily,alerts,flags
 
     #json_data = get_forecast_today(apikey=args.api, long=args.long, lati=args.lati, uni=args.uni)
-    json_data = get_forecast_timemachine(apikey=args.api, long=args.long, lati=args.lati, uni=args.uni, time=args.time)
+    """json_data = get_forecast_timemachine(apikey=args.api, long=args.long, lati=args.lati, uni=args.uni, time=args.time)
     
     with open('./output/forecast-timemachine-'+args.time+'-'+args.long+args.lati+'.json', 'w') as fp:
-        json.dump(json_data, fp, indent=4)
+        json.dump(json_data, fp, indent=4)"""
     #change_data.to_csv("./output/"+args.long+args.lati+'.csv', encoding='utf-8')
     #print('Complete!')

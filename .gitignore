@@ -1,2 +1,4 @@
 output/
 .python-version
+crawl.sh
+.DS_Store
